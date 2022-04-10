@@ -1,19 +1,22 @@
 #include <stdio.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <unistd.h>
+#include <stdlib.h>
+#include <sys/types.h> //pid_t
+#include <signal.h> //signal()
+#include <unistd.h> //pause()
 
-int main(int argc, char **argv)
-{
-	pid_t pid;
-	
-	if(argc<2)
-	{
-		printf("\n nincs kinek, exitlok. \n");
-		exit(1);
-	}
-	
-	pid = atoi(argv[1]);
-	kill(pid, SIGALRM); 
-	exit(0);
+void signalHandler(int);
+
+int main(){
+	pid_t pid = getpid();
+	printf("PID: %d\n", (int)pid);
+	printf("Signal kezelo atvetele: %d\n", signal(SIGALRM, signalHandler));
+	printf("Waiting...\n");
+	pause();
+	printf("Not blocked anymore. Terminating...\n");
+
+	return 0;
+}
+
+void signalHandler(int sig){
+	printf("FEU2E5\n");
 }
